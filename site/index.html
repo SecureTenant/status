@@ -233,11 +233,19 @@
   var moon = document.getElementById('icoMoon');
   var sun = document.getElementById('icoSun');
 
+  // `hidden` is een eigenschap van HTMLElement, niet van SVGElement: el.hidden = true
+  // op een <svg> zet alleen een losse JS-eigenschap en raakt het attribuut niet aan.
+  // Vandaar setAttribute/removeAttribute, dat werkt op elk element.
+  function setHidden(el, hide) {
+    if (hide) el.setAttribute('hidden', '');
+    else el.removeAttribute('hidden');
+  }
+
   function apply(theme) {
     root.setAttribute('data-theme', theme);
     var dark = theme === 'dark';
-    moon.hidden = dark;
-    sun.hidden = !dark;
+    setHidden(moon, dark);
+    setHidden(sun, !dark);
     btn.setAttribute('aria-label', dark ? 'Wissel naar lichte weergave' : 'Wissel naar donkere weergave');
   }
 
