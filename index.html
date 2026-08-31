@@ -1,26 +1,393 @@
-<!DOCTYPE html> <html lang=en> <head> <meta charset=utf-8> <meta content="width=device-width,initial-scale=1" name=viewport> <meta content=#333333 name=theme-color> <base href=/ > <link href=manifest.json rel=manifest crossorigin=use-credentials> <script>__SAPPER__={baseUrl:"",preloaded:[void 0,{}]};if('serviceWorker' in navigator)navigator.serviceWorker.register('/service-worker.js');(function(){try{eval("async function x(){}");var main="/client/client.02e67755.js"}catch(e){main="/client/legacy/client.c02be714.js"};var s=document.createElement("script");try{new Function("if(0)import('')")();s.src=main;s.type="module";s.crossOrigin="use-credentials";}catch(e){s.src="/client/shimport@2.0.5.js";s.setAttribute("data-main",main);}document.head.appendChild(s);}());</script> <link href=client/client-31a52aa5.css rel=stylesheet><link href=client/createOctokit-a85f76c7.css rel=stylesheet><link href=client/index-b0b6455a.css rel=stylesheet> <title>SecureTenant Status</title> <script>// If `prefers-color-scheme` is not supported, fall back to light mode.
-      // In this case, light.css will be downloaded with `highest` priority.
-      if (typeof window !== "undefined" && typeof document !== "undefined" && "matchMedia" in window && window.matchMedia('(prefers-color-scheme: dark)').media === 'not all') {
-        document.documentElement.style.display = 'none';
-        document.head.insertAdjacentHTML(
-          'beforeend',
-          '<link rel="stylesheet" href={`${config.path}/themes/light.css`} onload="document.documentElement.style.display = \'\'">',
-        );
-      } </script> <link href=https://status.secure-tenant.com/themes/light.css rel=stylesheet media=(prefers-color-scheme:light)> <link href=https://status.secure-tenant.com/themes/dark.css rel=stylesheet media=(prefers-color-scheme:dark)><link href=https://status.secure-tenant.com/global.css rel=stylesheet><link href=https://raw.githubusercontent.com/upptime/upptime/master/assets/upptime-icon.svg rel=icon type=image/svg><link href=/logo-192.png rel=icon type=image/png> <link href=/client/client.02e67755.js rel=modulepreload as=script crossorigin=use-credentials><link href=/client/client-31a52aa5.css rel=preload as=style><link href=/client/index.7ea74889.js rel=modulepreload as=script crossorigin=use-credentials><link href=/client/createOctokit.2722604b.js rel=modulepreload as=script crossorigin=use-credentials><link href=/client/inject_styles.803b7e80.js rel=modulepreload as=script crossorigin=use-credentials><link href=/client/createOctokit-a85f76c7.css rel=preload as=style><link href=/client/index-b0b6455a.css rel=preload as=style></head> <body> <div id=sapper> <nav class=svelte-a08hsz><div class="svelte-a08hsz container"> <ul class=svelte-a08hsz><li><a href=/ class=svelte-a08hsz target=_self aria-current=page>Status</a> <li><a href=https://secure-tenant.com class=svelte-a08hsz target=_self>SecureTenant</a> </li> </ul></div> </nav> <main class=container> <header class=svelte-ngkazm><h1>SecureTenant Status</h1> <p class="svelte-ngkazm lead">De actuele beschikbaarheid van SecureTenant. Deze pagina draait buiten onze eigen omgeving, zodat hij bereikbaar blijft als er iets misgaat.</header> <section class=svelte-8lnl4f><div class="svelte-68jxue loading"><svg class=svelte-68jxue height=38 stroke=#aaa width=38 xmlns=http://www.w3.org/2000/svg><g fill=none fill-rule=evenodd><g stroke-width=2 transform="translate(1 1)"><circle cx=18 cy=18 r=18 stroke-opacity=.5></circle><path d="M36 18c0-9.94-8.06-18-18-18"><animateTransform attributeName=transform dur=1s from="0 18 18" repeatCount=indefinite to="360 18 18" type=rotate></animateTransform></path></g></g></svg></div> </section> <section class=svelte-8lnl4f><div class="svelte-68jxue loading"><svg class=svelte-68jxue height=38 stroke=#aaa width=38 xmlns=http://www.w3.org/2000/svg><g fill=none fill-rule=evenodd><g stroke-width=2 transform="translate(1 1)"><circle cx=18 cy=18 r=18 stroke-opacity=.5></circle><path d="M36 18c0-9.94-8.06-18-18-18"><animateTransform attributeName=transform dur=1s from="0 18 18" repeatCount=indefinite to="360 18 18" type=rotate></animateTransform></path></g></g></svg></div> </section> <div class="svelte-fqsq6s f changed"><h2>Live Status</h2> <form class="svelte-fqsq6s f r"><div><input class=svelte-fqsq6s id=data_day name=d type=radio value=day><label class=svelte-fqsq6s for=data_day>24h</label></div> <div><input class=svelte-fqsq6s id=data_week name=d type=radio value=week checked><label class=svelte-fqsq6s for=data_week>7d</label></div> <div><input class=svelte-fqsq6s id=data_month name=d type=radio value=month><label class=svelte-fqsq6s for=data_month>30d</label></div> <div><input class=svelte-fqsq6s id=data_year name=d type=radio value=year><label class=svelte-fqsq6s for=data_year>1y</label></div> <div><input class=svelte-fqsq6s id=data_all name=d type=radio value=all><label class=svelte-fqsq6s for=data_all>all</label></div></form></div> <section class="svelte-fqsq6s live-status"><div class="svelte-68jxue loading"><svg class=svelte-68jxue height=38 stroke=#aaa width=38 xmlns=http://www.w3.org/2000/svg><g fill=none fill-rule=evenodd><g stroke-width=2 transform="translate(1 1)"><circle cx=18 cy=18 r=18 stroke-opacity=.5></circle><path d="M36 18c0-9.94-8.06-18-18-18"><animateTransform attributeName=transform dur=1s from="0 18 18" repeatCount=indefinite to="360 18 18" type=rotate></animateTransform></path></g></g></svg></div> </section> <section><div class="svelte-68jxue loading"><svg class=svelte-68jxue height=38 stroke=#aaa width=38 xmlns=http://www.w3.org/2000/svg><g fill=none fill-rule=evenodd><g stroke-width=2 transform="translate(1 1)"><circle cx=18 cy=18 r=18 stroke-opacity=.5></circle><path d="M36 18c0-9.94-8.06-18-18-18"><animateTransform attributeName=transform dur=1s from="0 18 18" repeatCount=indefinite to="360 18 18" type=rotate></animateTransform></path></g></g></svg></div> </section> <section><div class="svelte-68jxue loading"><svg class=svelte-68jxue height=38 stroke=#aaa width=38 xmlns=http://www.w3.org/2000/svg><g fill=none fill-rule=evenodd><g stroke-width=2 transform="translate(1 1)"><circle cx=18 cy=18 r=18 stroke-opacity=.5></circle><path d="M36 18c0-9.94-8.06-18-18-18"><animateTransform attributeName=transform dur=1s from="0 18 18" repeatCount=indefinite to="360 18 18" type=rotate></animateTransform></path></g></g></svg></div></section></main> <footer class=svelte-jbr799><p>This page is <a href=https://github.com/SecureTenant/status>open source</a>, powered by <a href=https://upptime.js.org>Upptime</a></p> </footer></div> <script> try {
-        if (typeof window !== "undefined" && window.navigator && navigator.serviceWorker) {
-          navigator.serviceWorker.getRegistrations().then(function (registrations) {
-            for (let registration of registrations) {
-              registration.unregister();
-            }
-          });
-        }
-        if (typeof window !== "undefined" && "caches" in window) {
-          caches.keys().then(function (keyList) {
-            return Promise.all(
-              keyList.map(function (key) {
-                return caches.delete(key);
-              })
-            );
-          });
-        }
-      } catch (error) {} </script> 
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SecureTenant Status</title>
+<meta name="description" content="De actuele beschikbaarheid van SecureTenant.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Michroma&display=swap">
+<style>
+  /* Tokens overgenomen uit app/src/index.css zodat dit hetzelfde product voelt. */
+  :root {
+    --accent: 133 79 243;
+    --ink: 20 27 52;
+    --text-2: 91 100 128;
+    --text-3: 154 161 180;
+    --line: 236 238 243;
+    --line-strong: 214 217 226;
+    --surface: 255 255 255;
+    --page: 244 245 251;
+    --pass: 6 118 71;
+    --pass-bg: 236 253 243;
+    --pass-bd: 159 227 186;
+    --warn: 181 71 8;
+    --warn-bg: 255 250 235;
+    --warn-bd: 245 205 138;
+    --crit: 180 35 24;
+    --crit-bg: 254 243 242;
+    --crit-bd: 242 184 178;
+    --shadow: 0 1px 2px rgb(20 27 52 / .05), 0 8px 24px -12px rgb(20 27 52 / .10);
+  }
+
+  :root[data-theme="dark"] {
+    --ink: 233 234 238;
+    --text-2: 166 169 180;
+    --text-3: 136 140 156;
+    --line: 42 44 51;
+    --line-strong: 58 61 70;
+    --surface: 26 27 32;
+    --page: 18 19 23;
+    --pass: 124 222 172;
+    --pass-bg: 25 38 32;
+    --pass-bd: 44 71 57;
+    --warn: 246 190 133;
+    --warn-bg: 43 35 26;
+    --warn-bd: 78 60 40;
+    --crit: 255 154 145;
+    --crit-bg: 43 30 29;
+    --crit-bd: 78 48 45;
+    --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 8px 24px -12px rgb(0 0 0 / .5);
+  }
+
+  * { box-sizing: border-box; }
+  html { color-scheme: light; }
+  :root[data-theme="dark"] { color-scheme: dark; }
+
+  body {
+    margin: 0;
+    background: rgb(var(--page));
+    color: rgb(var(--ink));
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 780px; margin: 0 auto; padding: 28px 20px 72px; }
+
+  .top {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; margin-bottom: 40px;
+  }
+
+  .brand {
+    font-family: Michroma, system-ui, sans-serif;
+    font-size: 13px; letter-spacing: .01em;
+    color: rgb(var(--ink)); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 9px;
+  }
+  .brand .dot { width: 9px; height: 9px; border-radius: 50%; background: rgb(var(--accent)); flex: none; }
+
+  .toggle {
+    width: 34px; height: 34px; display: grid; place-items: center;
+    border-radius: 10px; border: 1px solid rgb(var(--line));
+    background: rgb(var(--surface)); color: rgb(var(--text-2));
+    cursor: pointer; padding: 0; transition: color .15s, border-color .15s;
+  }
+  .toggle:hover { color: rgb(var(--ink)); border-color: rgb(var(--line-strong)); }
+  .toggle:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 2px; }
+  .toggle svg { width: 16px; height: 16px; display: block; }
+
+  .summary {
+    background: rgb(var(--surface)); border: 1px solid rgb(var(--line));
+    border-radius: 1rem; box-shadow: var(--shadow);
+    padding: 26px 26px 24px; margin-bottom: 28px;
+  }
+  .summary h1 {
+    margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -.015em;
+    text-wrap: balance; display: flex; align-items: center; gap: 11px;
+  }
+  .summary p { margin: 9px 0 0 22px; color: rgb(var(--text-2)); font-size: 14px; }
+
+  .beacon { width: 11px; height: 11px; border-radius: 50%; background: rgb(var(--pass)); flex: none; position: relative; }
+  .beacon.warn { background: rgb(var(--warn)); }
+  .beacon.crit { background: rgb(var(--crit)); }
+  .beacon::after {
+    content: ""; position: absolute; inset: -5px; border-radius: 50%;
+    border: 2px solid rgb(var(--pass) / .3); animation: pulse 2.6s ease-out infinite;
+  }
+  .beacon.warn::after { border-color: rgb(var(--warn) / .3); }
+  .beacon.crit::after { border-color: rgb(var(--crit) / .3); }
+  @keyframes pulse {
+    0% { transform: scale(.7); opacity: 1; }
+    70%, 100% { transform: scale(1.25); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .beacon::after { animation: none; opacity: .5; transform: none; }
+  }
+
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+    color: rgb(var(--text-3)); margin: 0 0 12px 2px;
+  }
+
+  .panel {
+    background: rgb(var(--surface)); border: 1px solid rgb(var(--line));
+    border-radius: 1rem; box-shadow: var(--shadow); overflow: hidden; margin-bottom: 28px;
+  }
+
+  .row { padding: 20px 24px; }
+  .row + .row { border-top: 1px solid rgb(var(--line)); }
+
+  .row-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin-bottom: 3px; }
+  .row-name { font-size: 15px; font-weight: 600; flex: 1 1 auto; min-width: 8rem; }
+  .row-desc { font-size: 13px; color: rgb(var(--text-3)); margin: 0 0 14px; }
+
+  .pill {
+    flex: none; font-size: 12px; font-weight: 600; padding: 3px 10px;
+    border-radius: 999px; border: 1px solid; white-space: nowrap;
+  }
+  .pill.ok   { color: rgb(var(--pass)); background: rgb(var(--pass-bg)); border-color: rgb(var(--pass-bd)); }
+  .pill.warn { color: rgb(var(--warn)); background: rgb(var(--warn-bg)); border-color: rgb(var(--warn-bd)); }
+  .pill.crit { color: rgb(var(--crit)); background: rgb(var(--crit-bg)); border-color: rgb(var(--crit-bd)); }
+
+  /* Elke staaf is een dag. De vorm draagt informatie, geen versiering. */
+  .strip { display: flex; gap: 2px; height: 30px; align-items: stretch; }
+  .strip i {
+    flex: 1 1 0; min-width: 0; border-radius: 2px;
+    background: rgb(var(--pass) / .55); transition: background .15s;
+  }
+  .strip i.warn { background: rgb(var(--warn) / .8); }
+  .strip i.crit { background: rgb(var(--crit) / .85); }
+  .strip i.none { background: rgb(var(--line-strong) / .5); }
+  .strip i:hover { background: rgb(var(--pass)); }
+  .strip i.warn:hover { background: rgb(var(--warn)); }
+  .strip i.crit:hover { background: rgb(var(--crit)); }
+
+  .scale {
+    display: flex; justify-content: space-between; font-size: 11.5px;
+    color: rgb(var(--text-3)); margin-top: 7px; font-variant-numeric: tabular-nums;
+  }
+  .scale b { font-weight: 600; color: rgb(var(--text-2)); }
+
+  .empty { padding: 30px 24px; text-align: center; color: rgb(var(--text-3)); font-size: 14px; }
+
+  footer {
+    margin-top: 36px; padding-top: 20px; border-top: 1px solid rgb(var(--line));
+    display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: space-between;
+    font-size: 12.5px; color: rgb(var(--text-3));
+  }
+  footer a { color: rgb(var(--text-2)); text-decoration: none; }
+  footer a:hover { color: rgb(var(--accent)); }
+  footer time { font-variant-numeric: tabular-nums; }
+
+  @media (max-width: 560px) {
+    .summary { padding: 22px 18px; }
+    .summary h1 { font-size: 19px; }
+    .row { padding: 18px; }
+    .strip { height: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <a class="brand" href="https://secure-tenant.com"><span class="dot"></span>SECURETENANT</a>
+    <button class="toggle" id="themeBtn" type="button" aria-label="Wissel naar donkere weergave">
+      <svg id="icoMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+      <svg id="icoSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+      </svg>
+    </button>
+  </div>
+
+  <section class="summary">
+    <h1><span class="beacon" id="beacon"></span><span id="headline">Status ophalen</span></h1>
+    <p id="sub">Een moment.</p>
+  </section>
+
+  <p class="section-label">Onderdelen</p>
+  <div class="panel" id="components">
+    <p class="empty">Bezig met laden.</p>
+  </div>
+
+  <p class="section-label">Recente incidenten</p>
+  <div class="panel">
+    <p class="empty" id="incidents">Geen incidenten in de afgelopen negentig dagen.</p>
+  </div>
+
+  <footer>
+    <span>Bijgewerkt <time id="updated">onbekend</time></span>
+    <span><a href="https://secure-tenant.com">secure-tenant.com</a></span>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  // ── Thema. Licht is de standaard, de keuze van de bezoeker wint en blijft bewaard. ──
+  var root = document.documentElement;
+  var btn = document.getElementById('themeBtn');
+  var moon = document.getElementById('icoMoon');
+  var sun = document.getElementById('icoSun');
+
+  function apply(theme) {
+    root.setAttribute('data-theme', theme);
+    var dark = theme === 'dark';
+    moon.hidden = dark;
+    sun.hidden = !dark;
+    btn.setAttribute('aria-label', dark ? 'Wissel naar lichte weergave' : 'Wissel naar donkere weergave');
+  }
+
+  var stored = null;
+  try { stored = localStorage.getItem('st-status-theme'); } catch (e) { /* privémodus */ }
+  apply(stored === 'dark' ? 'dark' : 'light');
+
+  btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    apply(next);
+    try { localStorage.setItem('st-status-theme', next); } catch (e) { /* privémodus */ }
+  });
+
+  // ── Data ────────────────────────────────────────────────
+  var DAYS = 90;
+  var DESC = {
+    website: 'secure-tenant.com',
+    portaal: 'app.secure-tenant.com',
+    api: 'api.secure-tenant.com',
+    workers: 'achtergrondprocessen voor de scans'
+  };
+  var LABEL = { ok: 'Werkt', warn: 'Verstoord', crit: 'Storing' };
+
+  function stateOf(item) {
+    if (item.status === 'up') return 'ok';
+    if (item.status === 'degraded') return 'warn';
+    return 'crit';
+  }
+
+  function isoDay(daysAgo) {
+    var d = new Date();
+    d.setUTCHours(0, 0, 0, 0);
+    d.setUTCDate(d.getUTCDate() - daysAgo);
+    return d.toISOString().slice(0, 10);
+  }
+
+  function nlDay(iso) {
+    var p = iso.split('-');
+    return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2]))
+      .toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+  }
+
+  function render(items, lastModified) {
+    var host = document.getElementById('components');
+    host.textContent = '';
+
+    var worst = 'ok';
+    var broken = [];
+
+    items.forEach(function (item) {
+      var state = stateOf(item);
+      if (state === 'crit') { worst = 'crit'; broken.push(item.name); }
+      else if (state === 'warn' && worst !== 'crit') { worst = 'warn'; broken.push(item.name); }
+
+      var row = document.createElement('div');
+      row.className = 'row';
+
+      var head = document.createElement('div');
+      head.className = 'row-head';
+
+      var name = document.createElement('span');
+      name.className = 'row-name';
+      name.textContent = item.name;
+
+      var pill = document.createElement('span');
+      pill.className = 'pill ' + state;
+      pill.textContent = LABEL[state];
+
+      head.appendChild(name);
+      head.appendChild(pill);
+
+      var desc = document.createElement('p');
+      desc.className = 'row-desc';
+      desc.textContent = DESC[item.slug] || item.url || '';
+
+      var down = item.dailyMinutesDown || {};
+      var strip = document.createElement('div');
+      strip.className = 'strip';
+      strip.setAttribute('role', 'img');
+      strip.setAttribute('aria-label',
+        item.name + ': ' + (item.uptime || '') + ' beschikbaar over negentig dagen');
+
+      for (var i = DAYS - 1; i >= 0; i--) {
+        var iso = isoDay(i);
+        var mins = down[iso] || 0;
+        var bar = document.createElement('i');
+        if (mins > 60) { bar.className = 'crit'; }
+        else if (mins > 0) { bar.className = 'warn'; }
+        bar.title = mins > 0
+          ? nlDay(iso) + ' — ' + mins + ' minuten niet bereikbaar'
+          : nlDay(iso) + ' — geen storing';
+        strip.appendChild(bar);
+      }
+
+      var scale = document.createElement('div');
+      scale.className = 'scale';
+      var l = document.createElement('span');
+      l.textContent = '90 dagen geleden';
+      var m = document.createElement('span');
+      var b = document.createElement('b');
+      b.textContent = item.uptime || '-';
+      m.appendChild(b);
+      m.appendChild(document.createTextNode(' beschikbaar'));
+      var r = document.createElement('span');
+      r.textContent = 'vandaag';
+      scale.appendChild(l); scale.appendChild(m); scale.appendChild(r);
+
+      row.appendChild(head);
+      row.appendChild(desc);
+      row.appendChild(strip);
+      row.appendChild(scale);
+      host.appendChild(row);
+    });
+
+    var beacon = document.getElementById('beacon');
+    beacon.className = 'beacon' + (worst === 'ok' ? '' : ' ' + worst);
+
+    document.getElementById('headline').textContent =
+      worst === 'ok' ? 'Alle systemen werken'
+      : worst === 'warn' ? 'Verstoring bij ' + broken.join(' en ')
+      : 'Storing bij ' + broken.join(' en ');
+
+    document.getElementById('sub').textContent =
+      worst === 'ok'
+        ? 'We controleren elke vijf minuten.'
+        : 'We werken eraan. Deze pagina wordt elke vijf minuten bijgewerkt.';
+
+    if (lastModified) {
+      document.getElementById('updated').textContent =
+        lastModified.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' }) +
+        ' om ' + lastModified.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
+    }
+  }
+
+  function fail() {
+    document.getElementById('beacon').className = 'beacon warn';
+    document.getElementById('headline').textContent = 'Status onbekend';
+    document.getElementById('sub').textContent =
+      'We konden de meetgegevens niet ophalen. Dit zegt niets over of de dienst zelf werkt.';
+    document.getElementById('components').innerHTML =
+      '<p class="empty">Geen meetgegevens beschikbaar.</p>';
+  }
+
+  fetch('summary.json', { cache: 'no-cache' })
+    .then(function (res) {
+      if (!res.ok) throw new Error(res.status);
+      var lm = res.headers.get('last-modified');
+      return res.json().then(function (data) {
+        render(data, lm ? new Date(lm) : new Date());
+      });
+    })
+    .catch(fail);
+})();
+</script>
+</body>
+</html>
