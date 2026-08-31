@@ -1,31 +1,49 @@
-# Change these first
-owner: upptime # Your GitHub organization or username, where this repository lives
-repo: upptime # The name of this repository
+owner: SecureTenant
+repo: status
 
+# Elke regel hieronder is een monitor. Upptime draait ze via GitHub Actions,
+# dus buiten Azure: valt Azure om, dan blijft deze meting gewoon doorlopen.
 sites:
-  - name: Google
-    url: https://www.google.com
-  - name: Wikipedia
-    url: https://en.wikipedia.org
-  - name: Hacker News
-    url: https://news.ycombinator.com
-  - name: Secret Site
-    url: $SECRET_SITE
+  - name: Website
+    url: https://secure-tenant.com
+    maxResponseTime: 3000
+
+  - name: Portaal
+    url: https://app.secure-tenant.com
+    maxResponseTime: 3000
+
+  # /health geeft 503 zodra de database onbereikbaar is, dus de statuscode
+  # alleen is hier al betekenisvol. De tekstcontrole vangt het geval waarin
+  # er wel een 200 komt maar met een andere inhoud.
+  - name: API
+    url: https://api.secure-tenant.com/health
+    expectedStatusCodes:
+      - 200
+    __dangerous__body_down_if_text_missing: '"status":"healthy"'
+    maxResponseTime: 3000
+
+  # Zelfde URL, andere vraag. De worker heeft geen ingress en niets zichtbaars
+  # dat kapot kan gaan, dus zonder deze controle merk je pas dat hij stilstaat
+  # als de scan een nacht niet gedraaid heeft. /health rapporteert de hartslag
+  # als "ok", "stale" of "unknown" — alles behalve "ok" is hier een storing,
+  # want dan lopen de scans niet.
+  - name: Workers
+    url: https://api.secure-tenant.com/health
+    expectedStatusCodes:
+      - 200
+    __dangerous__body_down_if_text_missing: '"worker":"ok"'
+    maxResponseTime: 3000
+
+assignees:
+  - mehdi6132
 
 status-website:
-  # Add your custom domain name, or remove the `cname` line if you don't have a domain
-  # Uncomment the `baseUrl` line if you don't have a custom domain and add your repo name there
-  cname: demo.upptime.js.org
-  # baseUrl: /your-repo-name
-  logoUrl: https://raw.githubusercontent.com/upptime/upptime.js.org/master/static/img/icon.svg
-  name: Upptime
-  introTitle: "**Upptime** is the open-source uptime monitor and status page, powered entirely by GitHub."
-  introMessage: This is a sample status page which uses **real-time** data from our [GitHub repository](https://github.com/upptime/upptime). No server required — just GitHub Actions, Issues, and Pages. [**Get your own for free**](https://github.com/upptime/upptime)
+  cname: status.secure-tenant.com
+  name: SecureTenant Status
+  introTitle: SecureTenant Status
+  introMessage: De actuele beschikbaarheid van SecureTenant. Deze pagina draait buiten onze eigen omgeving, zodat hij bereikbaar blijft als er iets misgaat.
   navbar:
     - title: Status
       href: /
-    - title: GitHub
-      href: https://github.com/$OWNER/$REPO
-
-# Upptime also supports notifications, assigning issues, and more
-# See https://upptime.js.org/docs/configuration
+    - title: SecureTenant
+      href: https://secure-tenant.com
