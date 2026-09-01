@@ -39,6 +39,7 @@ jobs:
         run: |
           mkdir -p /tmp/site
           cp site/index.html /tmp/site/index.html
+          cp -r site/assets /tmp/site/assets
           cp history/summary.json /tmp/site/summary.json
           echo "status.secure-tenant.com" > /tmp/site/CNAME
           # Zonder dit haalt GitHub Pages de inhoud door Jekyll heen.

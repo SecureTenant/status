@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SecureTenant Status</title>
 <meta name="description" content="De actuele beschikbaarheid van SecureTenant.">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180x180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Michroma&display=swap">
@@ -72,13 +75,35 @@
     gap: 16px; margin-bottom: 40px;
   }
 
+  /* Zelfde opbouw als de header van de marketingsite: beeldmerk als afbeelding, "SecureTenant"
+     in Michroma ernaast. Niet in hoofdletters, want de site doet dat ook niet. */
   .brand {
     font-family: Michroma, system-ui, sans-serif;
-    font-size: 13px; letter-spacing: .01em;
+    font-size: 15px; letter-spacing: -.01em;
     color: rgb(var(--ink)); text-decoration: none;
-    display: inline-flex; align-items: center; gap: 9px;
+    display: inline-flex; align-items: center; gap: 8px;
   }
-  .brand .dot { width: 9px; height: 9px; border-radius: 50%; background: rgb(var(--accent)); flex: none; }
+  .brand img { width: 26px; height: 26px; object-fit: contain; flex: none; }
+
+  /* Taal en thema naast elkaar, rechtsboven. */
+  .controls { display: flex; align-items: center; gap: 8px; flex: none; }
+
+  .lang {
+    display: inline-flex;
+    border: 1px solid rgb(var(--line));
+    background: rgb(var(--surface));
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .lang button {
+    border: 0; background: transparent; color: rgb(var(--text-3));
+    font: inherit; font-size: 11.5px; font-weight: 700; letter-spacing: .04em;
+    padding: 7px 9px; cursor: pointer;
+    transition: color .15s, background .15s;
+  }
+  .lang button:hover { color: rgb(var(--ink)); }
+  .lang button[aria-pressed="true"] { color: rgb(var(--surface)); background: rgb(var(--ink)); }
+  .lang button:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: -2px; }
 
   .toggle {
     width: 34px; height: 34px; display: grid; place-items: center;
@@ -228,7 +253,14 @@
 <div class="wrap">
 
   <div class="top">
-    <a class="brand" href="https://secure-tenant.com"><span class="dot"></span>SECURETENANT</a>
+    <a class="brand" href="https://secure-tenant.com">
+      <img src="assets/logo.png" alt="">SecureTenant
+    </a>
+    <div class="controls">
+      <div class="lang" id="langSwitch" role="group" aria-label="Taal">
+        <button type="button" data-lang="nl" aria-pressed="true">NL</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
     <button class="toggle" id="themeBtn" type="button" aria-label="Wissel naar donkere weergave">
       <svg id="icoMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -238,27 +270,29 @@
         <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
       </svg>
     </button>
+    </div>
   </div>
 
   <section class="summary">
-    <h1><span class="beacon" id="beacon"></span><span id="headline">Status ophalen</span></h1>
-    <p id="sub">Een moment.</p>
+    <h1><span class="beacon" id="beacon"></span><span id="headline"></span></h1>
+    <p id="sub"></p>
   </section>
 
+  <p class="section-label" data-t="maintenanceLabel"></p>
   <div id="maintenance"></div>
 
-  <p class="section-label">Onderdelen</p>
+  <p class="section-label" data-t="componentsLabel"></p>
   <div class="panel" id="components">
-    <p class="empty">Bezig met laden.</p>
+    <p class="empty" data-t="loading"></p>
   </div>
 
-  <p class="section-label">Recente incidenten</p>
+  <p class="section-label" data-t="incidentsLabel"></p>
   <div class="panel">
-    <p class="empty" id="incidents">Geen incidenten in de afgelopen negentig dagen.</p>
+    <p class="empty" data-t="noIncidents"></p>
   </div>
 
   <footer>
-    <span>Bijgewerkt <time id="updated">onbekend</time></span>
+    <span><span data-t="updatedLabel"></span> <time id="updated">-</time></span>
     <span><a href="https://secure-tenant.com">secure-tenant.com</a></span>
   </footer>
 
@@ -268,47 +302,120 @@
 (function () {
   'use strict';
 
+  // ── Teksten ─────────────────────────────────────────────────────────────
+  // Nederlands eerst, want dat is de taal van het product. Alles wat een bezoeker leest staat
+  // hier, zodat er nergens anders in dit bestand nog een losse zin achterblijft.
+  var STR = {
+    nl: {
+      docTitle: 'SecureTenant Status',
+      themeToDark: 'Wissel naar donkere weergave',
+      themeToLight: 'Wissel naar lichte weergave',
+      maintenanceLabel: 'Gepland onderhoud',
+      componentsLabel: 'Onderdelen',
+      incidentsLabel: 'Recente incidenten',
+      updatedLabel: 'Bijgewerkt',
+      loading: 'Bezig met laden.',
+      noIncidents: 'Geen incidenten in de afgelopen negentig dagen.',
+      noMaintenance: 'Geen gepland onderhoud. We laten het hier weten zodra er iets gepland staat.',
+      allGood: 'Alle systemen werken',
+      degradedAt: 'Verstoring bij ',
+      downAt: 'Storing bij ',
+      and: ' en ',
+      checkEvery: 'We controleren elke vijf minuten.',
+      workingOnIt: 'We werken eraan. Deze pagina wordt elke vijf minuten bijgewerkt.',
+      unknown: 'Status onbekend',
+      unknownSub: 'We konden de meetgegevens niet ophalen. Dit zegt niets over of de dienst zelf werkt.',
+      noData: 'Geen meetgegevens beschikbaar.',
+      ok: 'Werkt', warn: 'Verstoord', crit: 'Storing',
+      daysAgo: '90 dagen geleden', today: 'vandaag', available: ' beschikbaar',
+      availableOver90: ' beschikbaar over negentig dagen',
+      noOutage: 'geen storing', minutesDown: ' minuten niet bereikbaar',
+      maintNow: 'Onderhoud bezig', maintPlanned: 'Gepland onderhoud',
+      maintNote: 'Aangekondigd onderhoud telt niet mee als downtime.',
+      until: ' tot ', at: ' om ',
+      workers: 'achtergrondprocessen voor de scans'
+    },
+    en: {
+      docTitle: 'SecureTenant Status',
+      themeToDark: 'Switch to dark mode',
+      themeToLight: 'Switch to light mode',
+      maintenanceLabel: 'Planned maintenance',
+      componentsLabel: 'Components',
+      incidentsLabel: 'Recent incidents',
+      updatedLabel: 'Updated',
+      loading: 'Loading.',
+      noIncidents: 'No incidents in the past ninety days.',
+      noMaintenance: 'No planned maintenance. We will post it here as soon as something is scheduled.',
+      allGood: 'All systems operational',
+      degradedAt: 'Degraded: ',
+      downAt: 'Outage: ',
+      and: ' and ',
+      checkEvery: 'We check every five minutes.',
+      workingOnIt: 'We are working on it. This page updates every five minutes.',
+      unknown: 'Status unknown',
+      unknownSub: 'We could not load the measurements. This says nothing about whether the service itself is working.',
+      noData: 'No measurements available.',
+      ok: 'Operational', warn: 'Degraded', crit: 'Outage',
+      daysAgo: '90 days ago', today: 'today', available: ' uptime',
+      availableOver90: ' uptime over ninety days',
+      noOutage: 'no outage', minutesDown: ' minutes unreachable',
+      maintNow: 'Maintenance in progress', maintPlanned: 'Planned maintenance',
+      maintNote: 'Announced maintenance does not count as downtime.',
+      until: ' to ', at: ' at ',
+      workers: 'background processes for the scans'
+    }
+  };
+
+  var lang = 'nl';
+  try {
+    var savedLang = localStorage.getItem('st-status-lang');
+    if (savedLang === 'en' || savedLang === 'nl') lang = savedLang;
+  } catch (e) { /* privemodus */ }
+
+  function t(key) { return STR[lang][key]; }
+  function locale() { return lang === 'en' ? 'en-GB' : 'nl-NL'; }
+
   // ── Thema. Licht is de standaard, de keuze van de bezoeker wint en blijft bewaard. ──
   var root = document.documentElement;
   var btn = document.getElementById('themeBtn');
   var moon = document.getElementById('icoMoon');
   var sun = document.getElementById('icoSun');
 
-  // `hidden` is een eigenschap van HTMLElement, niet van SVGElement: el.hidden = true
-  // op een <svg> zet alleen een losse JS-eigenschap en raakt het attribuut niet aan.
-  // Vandaar setAttribute/removeAttribute, dat werkt op elk element.
+  // `hidden` is een eigenschap van HTMLElement, niet van SVGElement: el.hidden = true op een
+  // <svg> zet alleen een losse JS-eigenschap en raakt het attribuut niet aan.
   function setHidden(el, hide) {
     if (hide) el.setAttribute('hidden', '');
     else el.removeAttribute('hidden');
   }
 
-  function apply(theme) {
+  function applyTheme(theme) {
     root.setAttribute('data-theme', theme);
     var dark = theme === 'dark';
     setHidden(moon, dark);
     setHidden(sun, !dark);
-    btn.setAttribute('aria-label', dark ? 'Wissel naar lichte weergave' : 'Wissel naar donkere weergave');
+    btn.setAttribute('aria-label', dark ? t('themeToLight') : t('themeToDark'));
   }
 
-  var stored = null;
-  try { stored = localStorage.getItem('st-status-theme'); } catch (e) { /* privémodus */ }
-  apply(stored === 'dark' ? 'dark' : 'light');
+  var storedTheme = null;
+  try { storedTheme = localStorage.getItem('st-status-theme'); } catch (e) { /* privemodus */ }
+  applyTheme(storedTheme === 'dark' ? 'dark' : 'light');
 
   btn.addEventListener('click', function () {
     var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    apply(next);
-    try { localStorage.setItem('st-status-theme', next); } catch (e) { /* privémodus */ }
+    applyTheme(next);
+    try { localStorage.setItem('st-status-theme', next); } catch (e) { /* privemodus */ }
   });
 
-  // ── Data ────────────────────────────────────────────────
+  // Wat we vasthouden, zodat een taalwissel niet opnieuw hoeft op te halen.
+  var cache = { summary: null, lastModified: null, maintenance: null, failed: false };
+
+  // ── Onderdelen ──────────────────────────────────────────────────────────
   var DAYS = 90;
   var DESC = {
     website: 'secure-tenant.com',
     portaal: 'app.secure-tenant.com',
-    api: 'api.secure-tenant.com',
-    workers: 'achtergrondprocessen voor de scans'
+    api: 'api.secure-tenant.com'
   };
-  var LABEL = { ok: 'Werkt', warn: 'Verstoord', crit: 'Storing' };
 
   function stateOf(item) {
     if (item.status === 'up') return 'ok';
@@ -323,20 +430,28 @@
     return d.toISOString().slice(0, 10);
   }
 
-  function nlDay(iso) {
+  function shortDay(iso) {
     var p = iso.split('-');
     return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2]))
-      .toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+      .toLocaleDateString(locale(), { day: 'numeric', month: 'short', timeZone: 'UTC' });
   }
 
-  function render(items, lastModified) {
+  function renderComponents() {
     var host = document.getElementById('components');
     host.textContent = '';
+
+    if (cache.failed || !cache.summary) {
+      var e = document.createElement('p');
+      e.className = 'empty';
+      e.textContent = cache.failed ? t('noData') : t('loading');
+      host.appendChild(e);
+      return;
+    }
 
     var worst = 'ok';
     var broken = [];
 
-    items.forEach(function (item) {
+    cache.summary.forEach(function (item) {
       var state = stateOf(item);
       if (state === 'crit') { worst = 'crit'; broken.push(item.name); }
       else if (state === 'warn' && worst !== 'crit') { worst = 'warn'; broken.push(item.name); }
@@ -353,21 +468,20 @@
 
       var pill = document.createElement('span');
       pill.className = 'pill ' + state;
-      pill.textContent = LABEL[state];
+      pill.textContent = t(state);
 
       head.appendChild(name);
       head.appendChild(pill);
 
       var desc = document.createElement('p');
       desc.className = 'row-desc';
-      desc.textContent = DESC[item.slug] || item.url || '';
+      desc.textContent = item.slug === 'workers' ? t('workers') : (DESC[item.slug] || item.url || '');
 
       var down = item.dailyMinutesDown || {};
       var strip = document.createElement('div');
       strip.className = 'strip';
       strip.setAttribute('role', 'img');
-      strip.setAttribute('aria-label',
-        item.name + ': ' + (item.uptime || '') + ' beschikbaar over negentig dagen');
+      strip.setAttribute('aria-label', item.name + ': ' + (item.uptime || '') + t('availableOver90'));
 
       for (var i = DAYS - 1; i >= 0; i--) {
         var iso = isoDay(i);
@@ -376,22 +490,22 @@
         if (mins > 60) { bar.className = 'crit'; }
         else if (mins > 0) { bar.className = 'warn'; }
         bar.title = mins > 0
-          ? nlDay(iso) + ' — ' + mins + ' minuten niet bereikbaar'
-          : nlDay(iso) + ' — geen storing';
+          ? shortDay(iso) + ' — ' + mins + t('minutesDown')
+          : shortDay(iso) + ' — ' + t('noOutage');
         strip.appendChild(bar);
       }
 
       var scale = document.createElement('div');
       scale.className = 'scale';
       var l = document.createElement('span');
-      l.textContent = '90 dagen geleden';
+      l.textContent = t('daysAgo');
       var m = document.createElement('span');
       var b = document.createElement('b');
       b.textContent = item.uptime || '-';
       m.appendChild(b);
-      m.appendChild(document.createTextNode(' beschikbaar'));
+      m.appendChild(document.createTextNode(t('available')));
       var r = document.createElement('span');
-      r.textContent = 'vandaag';
+      r.textContent = t('today');
       scale.appendChild(l); scale.appendChild(m); scale.appendChild(r);
 
       row.appendChild(head);
@@ -401,56 +515,63 @@
       host.appendChild(row);
     });
 
-    var beacon = document.getElementById('beacon');
-    beacon.className = 'beacon' + (worst === 'ok' ? '' : ' ' + worst);
-
+    document.getElementById('beacon').className = 'beacon' + (worst === 'ok' ? '' : ' ' + worst);
     document.getElementById('headline').textContent =
-      worst === 'ok' ? 'Alle systemen werken'
-      : worst === 'warn' ? 'Verstoring bij ' + broken.join(' en ')
-      : 'Storing bij ' + broken.join(' en ');
+      worst === 'ok' ? t('allGood')
+      : worst === 'warn' ? t('degradedAt') + broken.join(t('and'))
+      : t('downAt') + broken.join(t('and'));
+    document.getElementById('sub').textContent = worst === 'ok' ? t('checkEvery') : t('workingOnIt');
 
-    document.getElementById('sub').textContent =
-      worst === 'ok'
-        ? 'We controleren elke vijf minuten.'
-        : 'We werken eraan. Deze pagina wordt elke vijf minuten bijgewerkt.';
-
-    if (lastModified) {
+    if (cache.lastModified) {
       document.getElementById('updated').textContent =
-        lastModified.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' }) +
-        ' om ' + lastModified.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
+        cache.lastModified.toLocaleDateString(locale(), { day: 'numeric', month: 'long' }) +
+        t('at') + cache.lastModified.toLocaleTimeString(locale(), { hour: '2-digit', minute: '2-digit' });
     }
   }
 
-  function fail() {
+  function renderFailure() {
     document.getElementById('beacon').className = 'beacon warn';
-    document.getElementById('headline').textContent = 'Status onbekend';
-    document.getElementById('sub').textContent =
-      'We konden de meetgegevens niet ophalen. Dit zegt niets over of de dienst zelf werkt.';
-    document.getElementById('components').innerHTML =
-      '<p class="empty">Geen meetgegevens beschikbaar.</p>';
+    document.getElementById('headline').textContent = t('unknown');
+    document.getElementById('sub').textContent = t('unknownSub');
+    renderComponents();
   }
 
   // ── Gepland onderhoud ───────────────────────────────────────────────────
   // Komt uit een bestand dat de workflow erbij zet, niet rechtstreeks uit de API: deze pagina mag
   // niet afhangen van de omgeving die hij bewaakt.
-  function nlWhen(a, b) {
+  function when(a, b) {
     var opts = { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' };
     var sameDay = a.toDateString() === b.toDateString();
     return sameDay
-      ? a.toLocaleDateString('nl-NL', opts) + ' tot ' + b.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' })
-      : a.toLocaleDateString('nl-NL', opts) + ' tot ' + b.toLocaleDateString('nl-NL', opts);
+      ? a.toLocaleDateString(locale(), opts) + t('until') + b.toLocaleTimeString(locale(), { hour: '2-digit', minute: '2-digit' })
+      : a.toLocaleDateString(locale(), opts) + t('until') + b.toLocaleDateString(locale(), opts);
   }
 
-  function renderMaintenance(windows) {
+  function renderMaintenance() {
     var host = document.getElementById('maintenance');
     host.textContent = '';
-    if (!windows || !windows.length) return;
 
     var now = new Date();
-    windows.forEach(function (w) {
+    var upcoming = (cache.maintenance || []).filter(function (w) {
+      return new Date(w.endsAt) >= now;
+    });
+
+    // Een lege lijst is zelf ook informatie. Zonder dit blok stond er niets, en dan kan een
+    // bezoeker niet zien of er geen onderhoud gepland staat of dat het gewoon niet geladen is.
+    if (!upcoming.length) {
+      var panel = document.createElement('div');
+      panel.className = 'panel';
+      var p = document.createElement('p');
+      p.className = 'empty';
+      p.textContent = t('noMaintenance');
+      panel.appendChild(p);
+      host.appendChild(panel);
+      return;
+    }
+
+    upcoming.forEach(function (w) {
       var start = new Date(w.startsAt);
       var end = new Date(w.endsAt);
-      if (end < now) return;
 
       var box = document.createElement('section');
       box.className = 'maint';
@@ -458,13 +579,13 @@
       var h = document.createElement('h2');
       h.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">'
         + '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>';
-      h.appendChild(document.createTextNode(start <= now ? 'Onderhoud bezig' : 'Gepland onderhoud'));
+      h.appendChild(document.createTextNode(start <= now ? t('maintNow') : t('maintPlanned')));
       box.appendChild(h);
 
-      var when = document.createElement('p');
-      when.className = 'when';
-      when.textContent = nlWhen(start, end);
-      box.appendChild(when);
+      var whenEl = document.createElement('p');
+      whenEl.className = 'when';
+      whenEl.textContent = when(start, end);
+      box.appendChild(whenEl);
 
       var title = document.createElement('p');
       title.className = 'body';
@@ -481,27 +602,61 @@
 
       var note = document.createElement('p');
       note.className = 'note';
-      note.textContent = 'Aangekondigd onderhoud telt niet mee als downtime.';
+      note.textContent = t('maintNote');
       box.appendChild(note);
 
       host.appendChild(box);
     });
   }
 
+  // ── Taal toepassen ──────────────────────────────────────────────────────
+  function applyLang() {
+    root.setAttribute('lang', lang);
+    document.title = t('docTitle');
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-t]'), function (el) {
+      el.textContent = t(el.getAttribute('data-t'));
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('#langSwitch button'), function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang));
+    });
+
+    btn.setAttribute('aria-label',
+      root.getAttribute('data-theme') === 'dark' ? t('themeToLight') : t('themeToDark'));
+
+    if (cache.failed) renderFailure(); else renderComponents();
+    renderMaintenance();
+  }
+
+  document.getElementById('langSwitch').addEventListener('click', function (e) {
+    var target = e.target.closest('button[data-lang]');
+    if (!target) return;
+    lang = target.getAttribute('data-lang');
+    try { localStorage.setItem('st-status-lang', lang); } catch (err) { /* privemodus */ }
+    applyLang();
+  });
+
+  // ── Ophalen ─────────────────────────────────────────────────────────────
+  applyLang();
+
   fetch('maintenance.json', { cache: 'no-cache' })
     .then(function (r) { return r.ok ? r.json() : { windows: [] }; })
-    .then(function (d) { renderMaintenance(d.windows); })
-    .catch(function () { /* geen onderhoudsgegevens: de rest van de pagina blijft gewoon staan */ });
+    .then(function (d) { cache.maintenance = d.windows || []; renderMaintenance(); })
+    .catch(function () { cache.maintenance = []; renderMaintenance(); });
 
   fetch('summary.json', { cache: 'no-cache' })
     .then(function (res) {
       if (!res.ok) throw new Error(res.status);
       var lm = res.headers.get('last-modified');
       return res.json().then(function (data) {
-        render(data, lm ? new Date(lm) : new Date());
+        cache.summary = data;
+        cache.lastModified = lm ? new Date(lm) : new Date();
+        cache.failed = false;
+        renderComponents();
       });
     })
-    .catch(fail);
+    .catch(function () { cache.failed = true; renderFailure(); });
 })();
 </script>
 </body>
