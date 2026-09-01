@@ -17,6 +17,10 @@ on:
       - "history/summary.json"
       - "site/**"
       - ".github/workflows/statuspagina.yml"
+  schedule:
+    # Elk uur, zodat een net gepubliceerd onderhoudsvenster binnen een uur zichtbaar is en niet
+    # pas wanneer er toevallig een meting binnenkomt.
+    - cron: "23 * * * *"
   workflow_dispatch:
 
 concurrency:
@@ -39,6 +43,16 @@ jobs:
           echo "status.secure-tenant.com" > /tmp/site/CNAME
           # Zonder dit haalt GitHub Pages de inhoud door Jekyll heen.
           touch /tmp/site/.nojekyll
+
+          # Gepland onderhoud komt uit de API, maar de PAGINA mag daar niet van afhangen: die
+          # draait bewust buiten Azure, en een statuspagina die omvalt met wat hij bewaakt is
+          # nutteloos. Daarom hier ophalen en als bestand meesturen. Lukt het niet, dan valt hij
+          # terug op een lege lijst en toont de pagina gewoon de rest.
+          if curl -fsS --max-time 20 https://api.secure-tenant.com/api/maintenance/upcoming -o /tmp/maintenance.json; then
+            python3 -c "import json,sys; json.load(open('/tmp/maintenance.json'))"               && cp /tmp/maintenance.json /tmp/site/maintenance.json               || echo '{"windows":[]}' > /tmp/site/maintenance.json
+          else
+            echo '{"windows":[]}' > /tmp/site/maintenance.json
+          fi
 
       - name: Publiceren naar gh-pages
         env:
