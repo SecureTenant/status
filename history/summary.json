@@ -4,19 +4,19 @@
     "url": "https://secure-tenant.com",
     "icon": "https://icons.duckduckgo.com/ip3/secure-tenant.com.ico",
     "slug": "website",
-    "status": "degraded",
-    "uptime": "100.00%",
-    "uptimeDay": "99.99%",
-    "uptimeWeek": "100.00%",
-    "uptimeMonth": "100.00%",
-    "uptimeYear": "100.00%",
-    "time": 1250,
-    "timeDay": 5071,
-    "timeWeek": 1734,
-    "timeMonth": 1250,
-    "timeYear": 1250,
+    "status": "up",
+    "uptime": "99.91%",
+    "uptimeDay": "98.96%",
+    "uptimeWeek": "99.85%",
+    "uptimeMonth": "99.91%",
+    "uptimeYear": "99.91%",
+    "time": 1217,
+    "timeDay": 3635,
+    "timeWeek": 1626,
+    "timeMonth": 1217,
+    "timeYear": 1217,
     "dailyMinutesDown": {
-      "2026-09-12": 0
+      "2026-09-12": 15
     }
   },
   {
