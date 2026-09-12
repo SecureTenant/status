@@ -1,7 +1,7 @@
 url: https://secure-tenant.com
-status: up
+status: degraded
 code: 200
-responseTime: 713
-lastUpdated: 2026-09-11T23:09:36.125Z
+responseTime: 9428
+lastUpdated: 2026-09-12T14:58:19.709Z
 startTime: 2026-08-31T19:15:38.364Z
 generator: Upptime <https://github.com/upptime/upptime>
